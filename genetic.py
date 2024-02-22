@@ -41,13 +41,18 @@ class Individual:
     
     @classmethod
     def get_mutate_gene(self):
+        # Get a random gene
+        # 0, 1 corresponding to trotter channel or qdrift channel
         return random.randint(0,1)
     
     @classmethod 
     def create_gnome(self, len):
+        # Function to create a new genome
         return [self.get_mutate_gene() for _ in range(len)]
     
     def mate(self, other):
+        # Mate function in genetic algorithm
+
         child_chromosomes = []
 
         for gene1, gene2 in zip(self.chromosome, other.chromosome):

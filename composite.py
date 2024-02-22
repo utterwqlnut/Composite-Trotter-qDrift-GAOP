@@ -14,6 +14,9 @@ class Composite:
         self.error = error
     
     def synthesize(self, need_reps):
+        # Synthesize Trotter and Qdrift circuits
+        # If reps are not needed only use reps as 1 to save time
+
         if need_reps:
             self.trotter_circ = SuzukiTrotter(reps=calc_reps_composite(self.error, self.h_trotter, self.h_qdrift, self.t, self.N_b)).synthesize(self.evoa)
             self.qdrift_circ = QDrift(reps=self.N_b).synthesize(self.evob)
@@ -24,6 +27,9 @@ class Composite:
             self.qdrift_reps = self.N_b
 
     def count_gates(self, multiply_reps):
+        # Count the number of gates in the two channels
+        # If reps were not used in synthesizing the channels, they need to be multiplied here
+        
         if not multiply_reps:
             self.trotter_total = sum(dict(self.trotter_circ.count_ops()).values())
             self.qdrift_total = sum(dict(self.qdrift_circ.count_ops()).values()) 
